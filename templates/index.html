@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>iPhone OLX Generator</title>
+  <script>
+    async function generateDescription() {
+      const data = {
+        model: document.getElementById("model").value,
+        condition: document.getElementById("condition").value,
+        storage: document.getElementById("storage").value,
+        color: document.getElementById("color").value,
+        battery: document.getElementById("battery").value,
+        extras: document.getElementById("extras").value,
+        notes: document.getElementById("notes").value
+      };
+
+      const res = await fetch("/generate", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      document.getElementById("output").innerText = result.description;
+    }
+  </script>
+</head>
+<body>
+  <h1>Opis iPhone na OLX</h1>
+  <label>Model: <input id="model"></label><br>
+  <label>Stan: <input id="condition"></label><br>
+  <label>Pamięć: <input id="storage"></label><br>
+  <label>Kolor: <input id="color"></label><br>
+  <label>Bateria (%): <input id="battery"></label><br>
+  <label>Dodatki (np. pudełko, ładowarka): <input id="extras"></label><br>
+  <label>Uwagi: <input id="notes"></label><br>
+  <button onclick="generateDescription()">Wygeneruj opis</button>
+  <p id="output"></p>
+</body>
+</html>
